@@ -3,44 +3,34 @@ package com.geektrust.backend.entities;
 import java.util.Objects;
 import com.geektrust.backend.enums.SubscriptionPlan;
 import com.geektrust.backend.enums.SubscriptionType;
+import com.geektrust.backend.services.SubscriptionService;
 
 public class MusicSubscription implements Subscription {
-    private SubscriptionPlan userSubscriptionPlan;
-    private int validityInMonths;
-    private int priceOfThePlan;
-    private final int SUBSCRIPTION_PLAN_VALIDITY_FREE_AND_PERSONAL = 1;
-    private final int SUBSCRIPTION_PLAN_VALIDITY_PREMIUM = 3;
-    private final int SUBSCRIPTION_PLAN_FREE_PRICE = 0;
-    private final int SUBSCRIPTION_PLAN_PERSONAL_PRICE = 100;
-    private final int SUBSCRIPTION_PLAN_PREMIUM_PRICE = 250;
-    
+  
+    private final SubscriptionService SUBSCRIPTION_SERVICE;
+
     public MusicSubscription(SubscriptionPlan userSubscriptionPlan){
-        this.userSubscriptionPlan = userSubscriptionPlan;
-        if(userSubscriptionPlan.equals(SubscriptionPlan.FREE)){
-            validityInMonths = SUBSCRIPTION_PLAN_VALIDITY_FREE_AND_PERSONAL;
-            priceOfThePlan = SUBSCRIPTION_PLAN_FREE_PRICE;
-        }else if(userSubscriptionPlan.equals(SubscriptionPlan.PERSONAL)){
-            validityInMonths = SUBSCRIPTION_PLAN_VALIDITY_FREE_AND_PERSONAL;
-            priceOfThePlan = SUBSCRIPTION_PLAN_PERSONAL_PRICE;
-        }else if(userSubscriptionPlan.equals(SubscriptionPlan.PREMIUM)){
-            validityInMonths = SUBSCRIPTION_PLAN_VALIDITY_PREMIUM;
-            priceOfThePlan = SUBSCRIPTION_PLAN_PREMIUM_PRICE;
-        }
+        int subscriptionPlanValidityFreeAndPersonal = 1;
+        int subscriptionPlanValidityPremium = 3;
+        int subscriptionPlanFreePrice = 0;
+        int subscriptionPlanPersonalPrice = 100;
+        int subscriptionPlanPremiumPrice = 250;
+        SUBSCRIPTION_SERVICE = new SubscriptionService(userSubscriptionPlan, subscriptionPlanValidityFreeAndPersonal, subscriptionPlanValidityPremium, subscriptionPlanFreePrice, subscriptionPlanPersonalPrice, subscriptionPlanPremiumPrice);
     }
 
     @Override
     public SubscriptionPlan getSubscriptionPlan() {
-        return userSubscriptionPlan;
+        return SUBSCRIPTION_SERVICE.getSubscriptionPlan();
     }
 
     @Override
     public int getValidity() {
-        return  validityInMonths;
+        return SUBSCRIPTION_SERVICE.getValidity();
     }
 
     @Override
     public int getPriceOfThePlan() {
-        return priceOfThePlan;
+        return SUBSCRIPTION_SERVICE.getPriceOfThePlan();
     }
 
     @Override
