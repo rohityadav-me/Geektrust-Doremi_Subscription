@@ -42,4 +42,19 @@ class AppTest {
         String actual = outputStream.toString().trim();
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("Integration Test 3 with wrong inputs")
+    public void integrationTest3(){
+        fileLocation = "sample_input/input3.txt";
+        input = new String[]{fileLocation};
+        App.main(input);
+        String expected = "INVALID_DATE" +  "\n"+
+        "ADD_SUBSCRIPTION_FAILED INVALID_DATE" +"\n"+
+        "ADD_SUBSCRIPTION_FAILED INVALID_DATE" +"\n"+
+        "ADD_TOPUP_FAILED INVALID_DATE" + "\n" +
+        "SUBSCRIPTIONS_NOT_FOUND";
+        String actual = outputStream.toString().trim();
+        assertEquals(expected, actual);
+    }
 }

@@ -40,6 +40,8 @@ public class CommandInvoker {
                 executingCommands.execute();
             }catch(AddTopUpFailed e){
                 System.out.println("ADD_TOPUP_FAILED "+e.getMessage());
+            }catch(AddSubscriptionFailed e){
+                System.out.println(e.getMessage());
             }
         }else if(command.equals(CLICommands.PRINT_RENEWAL_DETAILS.toString())){
             try{

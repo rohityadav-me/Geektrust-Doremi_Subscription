@@ -22,21 +22,27 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
         int day = currentDate.getDayOfMonth();
         int month = currentDate.getMonthValue();
         int year =  currentDate.getYear();
-        int monthToAdd = 0;
-        int numberOfMonthsInYear = 12;
-        int decemberMonthNumber = 12;
         int daysToSubtract = 10;
-        if(userPlan.equals(SubscriptionPlan.FREE) || userPlan.equals(SubscriptionPlan.PERSONAL)){
-            monthToAdd = 1;
-        }else{
-            monthToAdd = 3;
-        }
+        String newDate = adjustDate(day, month, year, userPlan);
+        LocalDate afterParsing = parseGivenStringDate(newDate);
+        afterParsing = afterParsing.minusDays(daysToSubtract);
+        return afterParsing.format(formatter);
+    }
+    private String adjustDate(int day, int month, int year,SubscriptionPlan userPlan){
+        int initialMonth = month;
+        int numberOfMonthsInYear = 12;
+        int decemberMonthNumber = 0;
+        int monthToAdd = checkSubscriptionPlan(userPlan);
         month += monthToAdd;
         month %= numberOfMonthsInYear;
-        if(month==0)
-            month = decemberMonthNumber;
-        else if(month<currentDate.getMonthValue())
+        if(month==decemberMonthNumber)
+            month = numberOfMonthsInYear;
+        else if(month<initialMonth)
             year++;
+        return createAdjustedDate(day, month, year);
+    }
+
+    private String createAdjustedDate(int day, int month, int year){
         String monthInString = String.valueOf(month);
         String dayInString = String.valueOf(day);
         int expectedDayMonthFormatLength = 10;
@@ -46,9 +52,17 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
         if(day<expectedDayMonthFormatLength)
             dayInString = zeroAppend + dayInString;
         String newDate = dayInString+"-"+monthInString+"-"+String.valueOf(year);
-        LocalDate afterParsing = parseGivenStringDate(newDate);
-        afterParsing = afterParsing.minusDays(daysToSubtract);
-        return afterParsing.format(formatter);
+        return newDate;
+    }
+
+    private int checkSubscriptionPlan(SubscriptionPlan userPlan){
+        int monthToAdd = 0;
+        if(userPlan.equals(SubscriptionPlan.FREE) || userPlan.equals(SubscriptionPlan.PERSONAL)){
+            monthToAdd = 1;
+        }else{
+            monthToAdd = 3;
+        }
+        return monthToAdd;
     }
     private LocalDate parseGivenStringDate(String date){
         LocalDate parsedDate = LocalDate.parse(date,formatter);

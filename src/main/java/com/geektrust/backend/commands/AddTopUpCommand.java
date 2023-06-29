@@ -6,17 +6,16 @@ import com.geektrust.backend.entities.User;
 import com.geektrust.backend.entities.UserSubscriptionTopUp;
 import com.geektrust.backend.enums.ErrorScenario;
 import com.geektrust.backend.enums.TopUpPlan;
-import com.geektrust.backend.exceptions.AddSubscriptionFailed;
 import com.geektrust.backend.exceptions.AddTopUpFailed;
 
 public class AddTopUpCommand implements SubscriptionCommands{
     private User currentUser;
     private TopUp userTopUp;
 
-    public AddTopUpCommand(User currentUser,List<String> inputCommands) throws AddSubscriptionFailed{
+    public AddTopUpCommand(User currentUser,List<String> inputCommands) throws AddTopUpFailed{
         this.currentUser = currentUser;
         if(this.currentUser == null)
-            throw new AddSubscriptionFailed(ErrorScenario.INVALID_DATE.toString());
+            throw new AddTopUpFailed(ErrorScenario.INVALID_DATE.toString());
         else{
             int indexOfTopUpPlan = 1;
             int indexOfTopUpValidity = 2;
