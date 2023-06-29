@@ -2,23 +2,29 @@ package com.geektrust.backend.entities;
 
 import java.util.Objects;
 import com.geektrust.backend.enums.SubscriptionPlan;
+import com.geektrust.backend.enums.SubscriptionType;
 
 public class PodcastSubscription implements Subscription {
     private SubscriptionPlan userSubscriptionPlan;
     private int validityInMonths;
     private int priceOfThePlan;
+    private final int SUBSCRIPTION_PLAN_VALIDITY_FREE_AND_PERSONAL = 1;
+    private final int SUBSCRIPTION_PLAN_VALIDITY_PREMIUM = 3;
+    private final int SUBSCRIPTION_PLAN_FREE_PRICE = 0;
+    private final int SUBSCRIPTION_PLAN_PERSONAL_PRICE = 100;
+    private final int SUBSCRIPTION_PLAN_PREMIUM_PRICE = 300;
 
     public PodcastSubscription(SubscriptionPlan userSubscriptionPlan){
         this.userSubscriptionPlan = userSubscriptionPlan;
         if(userSubscriptionPlan.equals(SubscriptionPlan.FREE)){
-            validityInMonths = 1;
-            priceOfThePlan = 0;
+            validityInMonths = SUBSCRIPTION_PLAN_VALIDITY_FREE_AND_PERSONAL;
+            priceOfThePlan = SUBSCRIPTION_PLAN_FREE_PRICE;
         }else if(userSubscriptionPlan.equals(SubscriptionPlan.PERSONAL)){
-            validityInMonths = 1;
-            priceOfThePlan = 100;
+            validityInMonths = SUBSCRIPTION_PLAN_VALIDITY_FREE_AND_PERSONAL;
+            priceOfThePlan = SUBSCRIPTION_PLAN_PERSONAL_PRICE;
         }else if(userSubscriptionPlan.equals(SubscriptionPlan.PREMIUM)){
-            validityInMonths = 3;
-            priceOfThePlan = 300;
+            validityInMonths = SUBSCRIPTION_PLAN_VALIDITY_PREMIUM;
+            priceOfThePlan = SUBSCRIPTION_PLAN_PREMIUM_PRICE;
         }
     }
 
@@ -39,7 +45,7 @@ public class PodcastSubscription implements Subscription {
 
     @Override
     public int hashCode(){
-        return Objects.hash("Podcast");
+        return Objects.hash(SubscriptionType.PODCAST.toString());
     }
 
     @Override
@@ -51,6 +57,6 @@ public class PodcastSubscription implements Subscription {
 
     @Override
     public String toString(){
-        return "PODCAST";
+        return SubscriptionType.PODCAST.toString();
     }
 }

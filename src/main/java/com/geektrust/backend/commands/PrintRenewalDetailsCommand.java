@@ -16,7 +16,10 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
     private final int NUMBER_OF_MONTHS_IN_YEAR = 12;
     private final int DECEMBER_MONTH_NUMBER = 0;
     private final int EXPECTED_DAY_MONTH_FORMAT_LENGTH = 10;
+    private final int ZERO_SUBSCRIPTIONS = 0;
     private final String ZERO_APPEND = "0";
+    private final int SUBSCRIPTION_PLAN_PERSONAL_FREE = 1;
+    private final int SUBSCRIPTION_PLAN_PREMIUM = 3;
     
     public PrintRenewalDetailsCommand(User currentUser) throws SubscriptionsNotFound{
         this.currentUser = currentUser;
@@ -59,9 +62,9 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
     private int checkSubscriptionPlan(SubscriptionPlan userPlan){
         int monthToAdd = 0;
         if(userPlan.equals(SubscriptionPlan.FREE) || userPlan.equals(SubscriptionPlan.PERSONAL)){
-            monthToAdd = 1;
+            monthToAdd = SUBSCRIPTION_PLAN_PERSONAL_FREE;
         }else{
-            monthToAdd = 3;
+            monthToAdd = SUBSCRIPTION_PLAN_PREMIUM;
         }
         return monthToAdd;
     }
@@ -72,9 +75,8 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
     public void execute() throws SubscriptionsNotFound{
         List<Subscription> usersSubscriptions = currentUser.getUsersActiveSubscriptions();
         int numberOfSubscriptions = usersSubscriptions.size();
-        int zeroSubscriptions = 0;
         LocalDate subscriptionStartDate = currentUser.getSubscriptionStartDate();
-        if(numberOfSubscriptions==zeroSubscriptions){
+        if(numberOfSubscriptions==ZERO_SUBSCRIPTIONS){
             throw new SubscriptionsNotFound(ErrorScenario.SUBSCRIPTIONS_NOT_FOUND.toString());
         }else{
             for(Subscription currentSubscription : usersSubscriptions){
