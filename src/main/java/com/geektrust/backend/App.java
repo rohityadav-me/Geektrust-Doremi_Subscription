@@ -9,11 +9,10 @@ import com.geektrust.backend.commands.CommandInvoker;
 import com.geektrust.backend.exceptions.NoSuchCommand;
 
 public class App {
-
+	private final static int INPUT_FILE_LOCATION = 0;
 	public static void main(String[] args) {
-		int inputFileLocation =  0;
 		BufferedReader reader;
-		String inputFile = args[inputFileLocation];
+		String inputFile = args[INPUT_FILE_LOCATION];
 		CommandInvoker invoker = new CommandInvoker();
 		try{
 			reader = new BufferedReader(new FileReader(inputFile));

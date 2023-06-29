@@ -14,16 +14,16 @@ import com.geektrust.backend.exceptions.AddSubscriptionFailed;
 public class AddSubscriptionCommand implements SubscriptionCommands{
     private User currentUser;
     private Subscription userSubscription;
-
+    private final int INDEX_OF_SUBSCRIPTION_TYPE = 1;
+    private final int INDEX_OF_SUBSCRIPTION_PLAN = 2;
     public AddSubscriptionCommand(User currentUser, List<String> inputCommands) throws AddSubscriptionFailed{
         this.currentUser = currentUser;
         if(this.currentUser==null)
             throw new AddSubscriptionFailed(ErrorScenario.INVALID_DATE.toString());
         else{
-            int indexOfSubscriptionType = 1;
-            int indexOfSubscriptionPlan = 2;
-            SubscriptionPlan userSubscriptionPlan = SubscriptionPlan.valueOf(inputCommands.get(indexOfSubscriptionPlan));
-            String subscriptionType = inputCommands.get(indexOfSubscriptionType);
+            
+            SubscriptionPlan userSubscriptionPlan = SubscriptionPlan.valueOf(inputCommands.get(INDEX_OF_SUBSCRIPTION_PLAN));
+            String subscriptionType = inputCommands.get(INDEX_OF_SUBSCRIPTION_TYPE);
             if(subscriptionType.equals(SubscriptionType.MUSIC.toString())){
                 userSubscription = new MusicSubscription(userSubscriptionPlan);
             }else if(subscriptionType.equals(SubscriptionType.PODCAST.toString())){

@@ -12,18 +12,17 @@ import com.geektrust.backend.exceptions.SubscriptionsNotFound;
 public class CommandInvoker {
     private User currentUser;
     private SubscriptionCommands executingCommands;
-
+    private final int INDEX_OF_USER_CREATED = 0;
+    private final int COMMAND_INDEX = 0;
     public void execute(List<String> inputCommands) throws NoSuchCommand{
-        int commandIndex = 0;
-        String command = inputCommands.get(commandIndex).toUpperCase();
+        String command = inputCommands.get(COMMAND_INDEX).toUpperCase();
 
         if(command.equals(CLICommands.START_SUBSCRIPTION.toString())){
             try{
                 List<User> modifyUser = Arrays.asList(currentUser);
                 executingCommands = new StartSubscriptionCommand(modifyUser, inputCommands);
                 executingCommands.execute();
-                int indexOfUserCreated = 0;
-                currentUser = modifyUser.get(indexOfUserCreated);
+                currentUser = modifyUser.get(INDEX_OF_USER_CREATED);
             }catch(AddSubscriptionFailed e){
                 System.out.println(e.getMessage());
             }

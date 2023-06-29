@@ -7,16 +7,19 @@ public class UserSubscriptionTopUp implements TopUp {
     private int numberOfDevicesSupported;
     private int topUpPrice;
     private int topUpvalidityInMonths;
-
+    private final int TOP_UP_FOUR_DEVICE_PRICE = 50;
+    private final int TOP_UP_FOUR_DEVICE_SUPPORTED = 4;
+    private final int TOP_UP_TEN_DEVICE_SUPPORTED = 10;
+    private final int TOP_UP_TEN_DEVICE_PRICE = 100;
     public UserSubscriptionTopUp(TopUpPlan userTopUpPlan, int topUpvalidityInMonths){
         this.userTopUpPlan = userTopUpPlan;
         this.topUpvalidityInMonths = topUpvalidityInMonths;
         if(userTopUpPlan.equals(TopUpPlan.FOUR_DEVICE)){
-            numberOfDevicesSupported = 4;
-            topUpPrice = 50 * topUpvalidityInMonths;
+            numberOfDevicesSupported = TOP_UP_FOUR_DEVICE_SUPPORTED;
+            topUpPrice = TOP_UP_FOUR_DEVICE_PRICE * topUpvalidityInMonths;
         }else{
-            numberOfDevicesSupported = 10;
-            topUpPrice =  100 * topUpvalidityInMonths;
+            numberOfDevicesSupported = TOP_UP_TEN_DEVICE_SUPPORTED;
+            topUpPrice =  TOP_UP_TEN_DEVICE_PRICE * topUpvalidityInMonths;
         }
     }
 

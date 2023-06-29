@@ -12,6 +12,12 @@ import com.geektrust.backend.exceptions.SubscriptionsNotFound;
 public class PrintRenewalDetailsCommand implements SubscriptionCommands{
     private User currentUser;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private final int DAYS_TO_SUBTRACT = 10;
+    private final int NUMBER_OF_MONTHS_IN_YEAR = 12;
+    private final int DECEMBER_MONTH_NUMBER = 0;
+    private final int EXPECTED_DAY_MONTH_FORMAT_LENGTH = 10;
+    private final String ZERO_APPEND = "0";
+    
     public PrintRenewalDetailsCommand(User currentUser) throws SubscriptionsNotFound{
         this.currentUser = currentUser;
         if(this.currentUser == null)
@@ -22,21 +28,18 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
         int day = currentDate.getDayOfMonth();
         int month = currentDate.getMonthValue();
         int year =  currentDate.getYear();
-        int daysToSubtract = 10;
         String newDate = adjustDate(day, month, year, userPlan);
         LocalDate afterParsing = parseGivenStringDate(newDate);
-        afterParsing = afterParsing.minusDays(daysToSubtract);
+        afterParsing = afterParsing.minusDays(DAYS_TO_SUBTRACT);
         return afterParsing.format(formatter);
     }
     private String adjustDate(int day, int month, int year,SubscriptionPlan userPlan){
         int initialMonth = month;
-        int numberOfMonthsInYear = 12;
-        int decemberMonthNumber = 0;
         int monthToAdd = checkSubscriptionPlan(userPlan);
         month += monthToAdd;
-        month %= numberOfMonthsInYear;
-        if(month==decemberMonthNumber)
-            month = numberOfMonthsInYear;
+        month %= NUMBER_OF_MONTHS_IN_YEAR;
+        if(month==DECEMBER_MONTH_NUMBER)
+            month = NUMBER_OF_MONTHS_IN_YEAR;
         else if(month<initialMonth)
             year++;
         return createAdjustedDate(day, month, year);
@@ -45,12 +48,10 @@ public class PrintRenewalDetailsCommand implements SubscriptionCommands{
     private String createAdjustedDate(int day, int month, int year){
         String monthInString = String.valueOf(month);
         String dayInString = String.valueOf(day);
-        int expectedDayMonthFormatLength = 10;
-        String zeroAppend = "0";
-        if(month<expectedDayMonthFormatLength)
-            monthInString = zeroAppend + monthInString;
-        if(day<expectedDayMonthFormatLength)
-            dayInString = zeroAppend + dayInString;
+        if(month<EXPECTED_DAY_MONTH_FORMAT_LENGTH)
+            monthInString = ZERO_APPEND + monthInString;
+        if(day<EXPECTED_DAY_MONTH_FORMAT_LENGTH)
+            dayInString = ZERO_APPEND + dayInString;
         String newDate = dayInString+"-"+monthInString+"-"+String.valueOf(year);
         return newDate;
     }

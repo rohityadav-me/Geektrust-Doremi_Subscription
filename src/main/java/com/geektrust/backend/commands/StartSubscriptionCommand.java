@@ -10,18 +10,18 @@ import com.geektrust.backend.exceptions.AddSubscriptionFailed;
 
 public class StartSubscriptionCommand implements SubscriptionCommands {
     private LocalDate subscriptionStartDate;
+    private final int DATE_INDEX_IN_COMMAND = 1;
+    private final String DATE_FORMAT = "dd-MM-yyyy";
+    private final int INDEX_OF_USER = 0;
     public StartSubscriptionCommand(List<User> modifyUser, List<String> commandExecuted){
-        int dateIndexInCommand = 1;
-        String date = commandExecuted.get(dateIndexInCommand);
+        String date = commandExecuted.get(DATE_INDEX_IN_COMMAND);
         if(isValidDate(date)){
-            int indexOfuser = 0;
-            modifyUser.set(indexOfuser, new User(subscriptionStartDate));
+            modifyUser.set(INDEX_OF_USER, new User(subscriptionStartDate));
         }
     }
     private boolean isValidDate(String date){
         try{
-            String dateFormat = "dd-MM-yyyy";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
             subscriptionStartDate = LocalDate.parse(date,formatter);
             return true;
         }catch(DateTimeParseException e){
