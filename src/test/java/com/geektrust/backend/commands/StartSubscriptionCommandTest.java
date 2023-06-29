@@ -14,13 +14,13 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Start Subscription Command Test")
 public class StartSubscriptionCommandTest {
-    SubscriptionCommands subscriptionCommandsInterface;
-    User currentUser;
-    LocalDate testingDate;
-    List<String> testingCommands;
-    String command = CLICommands.START_SUBSCRIPTION.toString();
-    String date;
-    List<User> userList;
+    private SubscriptionCommands subscriptionCommandsInterface;
+    private User currentUser;
+    private LocalDate testingDate;
+    private List<String> testingCommands;
+    private String command = CLICommands.START_SUBSCRIPTION.toString();
+    private String date;
+    private List<User> userList;
     @Test
     @DisplayName("Test with correct date inputs")
     public void correctDatesTest(){

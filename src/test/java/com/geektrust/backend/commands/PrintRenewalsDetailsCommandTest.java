@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 public class PrintRenewalsDetailsCommandTest {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private User user;
+    
     @BeforeEach
     public void setUp(){
         System.setOut(new PrintStream(outputStream));

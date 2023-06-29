@@ -10,8 +10,8 @@ import com.geektrust.backend.enums.SubscriptionPlan;
 import com.geektrust.backend.exceptions.SubscriptionsNotFound;
 
 public class PrintRenewalDetailsCommand implements SubscriptionCommands{
-    User currentUser;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private User currentUser;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     public PrintRenewalDetailsCommand(User currentUser) throws SubscriptionsNotFound{
         this.currentUser = currentUser;
         if(this.currentUser == null)

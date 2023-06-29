@@ -20,12 +20,11 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Add Top Up Command Test")
 public class AddTopUpCommandTest {
-    User currentUser;
-    TopUp userTopUp;
-    List<String> inputCommands;
-    SubscriptionCommands userCommands;
-    Subscription userSubscription;
-    String cliCommand =  CLICommands.ADD_TOPUP.toString();
+    private User currentUser;
+    private List<String> inputCommands;
+    private SubscriptionCommands userCommands;
+    private Subscription userSubscription;
+    private String cliCommand =  CLICommands.ADD_TOPUP.toString();
 
     @Test
     @DisplayName("Test with correct inputs")

@@ -17,12 +17,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Add Subscription Command Test")
 public class AddSubscriptionCommandTest {
-    User currentUser;
-    List<String> inputCommands;
-    String cliCommand = String.valueOf(CLICommands.ADD_SUBSCRIPTION);
-    String subscriptionPlan;
-    String subscriptionType;
-    SubscriptionCommands addSubscriptionCommands;
+    private User currentUser;
+    private List<String> inputCommands;
+    private String cliCommand = String.valueOf(CLICommands.ADD_SUBSCRIPTION);
+    private String subscriptionPlan;
+    private String subscriptionType;
+    private SubscriptionCommands addSubscriptionCommands;
     
     @Test
     @DisplayName("Testing With Correct Inputs")
